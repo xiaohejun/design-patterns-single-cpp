@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -85,14 +86,14 @@ public:
 
 class Application {
 private:
-    Button* button_;
-    CheckBox* check_box_;
+    unique_ptr<Button> button_;
+    unique_ptr<CheckBox> check_box_;
 
 public:
     Application(GUIFactory &factory)
     {
-        button_ = factory.createButton();
-        check_box_ = factory.createCheckBox();
+        button_ = unique_ptr<Button>(factory.createButton());
+        check_box_ = unique_ptr<CheckBox>(factory.createCheckBox());
     }
 
     void paint()
@@ -101,7 +102,6 @@ public:
         check_box_->paint();
     }
 
-    // TODO: 析构
 };
 
 void ClientCode(string type)
